@@ -1,0 +1,17 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+    <div class="textcon">
+       {{articleContent|safe}} 
+    </div>
+    
+    <form action="{% url 'encyclopedia:editarticle' %}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="Edit Article"> 
+        <input type="hidden" name="title" value="{{title}}">
+    </form>
+{% endblock %}

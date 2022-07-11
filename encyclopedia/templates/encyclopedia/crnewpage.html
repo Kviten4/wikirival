@@ -1,0 +1,21 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    New Article
+{% endblock %}
+
+{% block body %}
+	{% if exist %}
+		<h3>Article already exists</h3>
+	{% else %}
+		<h3>Create new article</h3>
+		<form action="{% url 'encyclopedia:crnewpage' %}" method="post">
+			{% csrf_token %}
+			<div class="form">
+			{{ form }}
+			</div>
+			<input type="submit" name="submit" class="btn btn-primary">
+			<input type="hidden" name="exist" value="forbid">
+		</form>
+	{% endif %}
+{% endblock %}
