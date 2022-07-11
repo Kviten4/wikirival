@@ -10,6 +10,4 @@ urlpatterns = [
     path("<str:title>", views.article, name="article"),
     path("search/", views.search, name="search"),
     path("edit/", views.editarticle, name="editarticle"),
-
-    path("update_server/", views.update, name="update"),
 ]
