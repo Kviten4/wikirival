@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from . import util
 import markdown
@@ -15,7 +15,9 @@ def index(request):
 def article(request, title):
     content = util.get_entry(title)
     if content == None:
-        return HttpResponseNotFound()
+        return render(request, "encyclopedia/article.html", {
+            "title": title
+        })
     else:
         return render(request, "encyclopedia/article.html", {
             "title": title,
@@ -31,14 +33,14 @@ def search(request):
     q = request.GET.get("q")
     if len(q) == 0 or q.isspace() == True:
         return HttpResponseRedirect(reverse("encyclopedia:index"))
-    query = q.strip().upper()
+    query = q.strip()
     list_articles = util.list_entries()    
     for item in list_articles:       
-        if query == item.upper():
-            return HttpResponseRedirect(reverse("encyclopedia:article", args=[query]))
+        if query.upper() == item.upper():
+            return HttpResponseRedirect(reverse("encyclopedia:article", args=[item]))
     results = []
     for item in list_articles:
-        if item.upper().find(query) != -1:
+        if item.upper().find(query.upper()) != -1:
             results.append(item)
     return render(request, "encyclopedia/search.html", {
         "results": results
