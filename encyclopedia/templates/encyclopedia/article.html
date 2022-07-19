@@ -11,11 +11,11 @@
         <div class="textcon">
            {{articleContent|safe}} 
         </div>
-        
         <form action="{% url 'encyclopedia:editarticle' %}" method="post">
             {% csrf_token %}
             <input class="btn btn-primary" type="submit" value="Edit Article"> 
             <input type="hidden" name="title" value="{{title}}">
+            <input class="btn btn-danger" name="Delete" type="submit" value="Delete">
         </form>
     {% endif %}
 {% endblock %}

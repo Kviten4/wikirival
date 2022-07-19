@@ -84,14 +84,22 @@ def crnewpage(request):
 
 def editarticle(request):
     if request.method == "POST":
-        form = NewArticleForm()
         title = request.POST.get("title")
-        form['NewArticleTitle'].initial = title
-        text = util.get_entry(title)
-        Split = text.split("\n", 1)
-        NewArticleContent = Split[1]
-        form['NewArticleContent'].initial = NewArticleContent
-        return render(request, "encyclopedia/edit.html", {
-                "form": form,
-                "title": title
+        if request.POST.get("Delete"):
+            util.delete(title)
+            return render(request, "encyclopedia/index.html", {
+            "entries": util.list_entries(),
+            "alert": True
             })
+        else:
+            form = NewArticleForm()
+            
+            form['NewArticleTitle'].initial = title
+            text = util.get_entry(title)
+            Split = text.split("\n", 1)
+            NewArticleContent = Split[1]
+            form['NewArticleContent'].initial = NewArticleContent
+            return render(request, "encyclopedia/edit.html", {
+                    "form": form,
+                    "title": title
+                })

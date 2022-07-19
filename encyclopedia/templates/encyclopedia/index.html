@@ -5,12 +5,15 @@
 {% endblock %}
 
 {% block body %}
+    {% if alert%}    
+        <div class="alert alert-danger" id="alert" role="alert">
+            Article deleted!
+        </div>   
+    {% endif %}   
     <h1>All Pages</h1>
-
     <ul>
         {% for entry in entries %}
             <li><a class = "listart" href="{% url 'encyclopedia:article' entry %}">{{ entry }}</a></li>
         {% endfor %}
-    </ul>
-
+    </ul>     
 {% endblock %}

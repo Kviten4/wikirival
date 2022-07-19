@@ -104,3 +104,7 @@ a {
 .textcon {
     font-size: 18px;
 }
+
+#alert {
+    margin: 0; 
+}
